@@ -1,21 +1,17 @@
-import { View, Text, StyleSheet } from 'react-native';
-import { ThemedView } from '../../components/ThemedView';
-import { ThemedText } from '../../components/ThemedText';
+import { useEffect, useState } from 'react';
+import LoadingScreen from '../../components/LoadingScreen';
+import RegisterScreen from '../../components/RegisterScreen';
 
+export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <ThemedText type="title">Welcome to Clyft!</ThemedText>
-      <ThemedText type="title">!!!!</ThemedText>
-    </ThemedView>
-  );
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000); // 1-second delay
+
+    return () => clearTimeout(timer); // Cleanup timeout
+  }, []);
+
+  return isLoading ? <LoadingScreen /> : <RegisterScreen />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
